@@ -113,23 +113,23 @@ function checkTie() {
 
 function minimax(newBoard, player) {
     // ყველა თავისუფალი უჯრა
-    var availSpots = emptySquares();
+    var emptySpots = emptySquares();
 
-    // Terminal states
+    // შევამოწმოთ თამაშის სიტუაცია
     if (checkWin(newBoard, huPlayer)) {
         return {score: -10}; // ადამიანმა მოიგო
     } else if (checkWin(newBoard, aiPlayer)) {
         return {score: 10}; // კომპიუტერმა მოიგო
-    } else if (availSpots.length === 0) {
+    } else if (emptySpots.length === 0) {
         return {score: 0}; // ფრე
     }
 
     var moves = [];
     // შემოვუაროთ თავისუფალ უჯრებს
-    for (var i = 0; i < availSpots.length; i++) {
+    for (var i = 0; i < emptySpots.length; i++) {
         var move = {};
-        move.index = newBoard[availSpots[i]];
-        newBoard[availSpots[i]] = player;
+        move.index = newBoard[emptySpots[i]];
+        newBoard[emptySpots[i]] = player;
 
         // რეკურსიულად გამოვიძახოთ მინი მაქსის ალგორითმი შემდეგი მოთამაშესთვის
         if (player == aiPlayer) {
@@ -141,7 +141,7 @@ function minimax(newBoard, player) {
         }
 
         // განვაახლოთ დათა
-        newBoard[availSpots[i]] = move.index;
+        newBoard[emptySpots[i]] = move.index;
         moves.push(move);
     }
 
