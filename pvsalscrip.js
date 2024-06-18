@@ -39,12 +39,10 @@ function startGame() {
 function turnClick(square) {
     // თუ დაჭერილი უჯრა ცარიელია შეასრულე შემდეგი
     if (typeof origBoard[square.target.id] == 'number') {
-        // მოთამაშე ასრულებს მოქმედებას
+        //მოთამაშე ასრულებს მოქმედებას
         turn(square.target.id, huPlayer);
-        // თუ თამაში ფრე ან მოგებული არ არის, კომპიუტერი ასრულებს სვლას
-        if (!checkWin(origBoard, huPlayer) && !checkTie()) {
-            aiTurn();
-        }
+        // თუ თამაში ფრე ან მოგევული არ არის კომპიუტერი ასრულებს სვლას
+        if (!checkWin(origBoard, huPlayer) && !checkTie()) turn(bestSpot(), aiPlayer);
     }
 }
 
@@ -55,16 +53,6 @@ function turn(squareId, player) {
     // ვამოწმებთ მორჩა თამაში თუ არა
     let gameWon = checkWin(origBoard, player);
     if (gameWon) gameOver(gameWon);
-}
-
-function aiTurn() {
-    while (!checkWin(origBoard, aiPlayer) && !checkTie()) {
-        turn(bestSpot(), aiPlayer);
-        if (checkWin(origBoard, aiPlayer) || checkTie()) {
-            break;
-        }
-        turn(bestSpot(), huPlayer);
-    }
 }
 
 function checkWin(board, player) {
